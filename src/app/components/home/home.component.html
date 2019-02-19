@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="container">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="http://localhost:8082/v1/photos/user/{{user.idUser}}" width="50" height="50" class="d-inline-block align-top">
+        {{user.firstName}}&nbsp;{{user.lastName}}
+      </a>
+    </nav>
+  </div>
+  <br />
+  <div class="row">
+    <input type="text" class ="form-control" placeholder="Search" (input)="filter($event.target.value)">
+  </div>
+  <br />
+  <div class="row" *ngIf="errorMessage">
+    <div class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+  </div>
+  <br />
+  <div class="row" *ngIf="successMessage">
+    <div class="alert alert-success" role="alert">
+      {{successMessage}}
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="#"><i class="fas fa-plus"></i>&nbsp;Add new character</a></li>
+      </ol>
+    </nav>
+  </div>
+  <br />
+  <div class="row">
+    <div class="card" *ngFor="let car of animeCharacters" style="width: 18rem;margin-right: 30px;">
+      <div class="card-header bg-transparent" *ngIf="car.idOwner !== -1">
+        <div class="btn-group" role="group" aria-label="Basic example" >
+          <button type="button" class="btn btn-link"><i class="fas fa-pen"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-link" (click)="removeCharacter(car.idCharacter)"><i class="fas fa-trash"></i>&nbsp;Remove</button>
+          <button type="button" class="btn btn-link" *ngIf="car.shared == 0" (click)="shareCharacter(car.idCharacter, car.shared)"><i class="fas fa-share-alt"></i>&nbsp;Share</button>
+          <button type="button" class="btn btn-link" *ngIf="car.shared == 1" (click)="shareCharacter(car.idCharacter, car.shared)"><i class="fas fa-share-alt" ></i>&nbsp;Unshare</button>
+        </div>
+      </div>
+      <div class="card-header bg-transparent" *ngIf="car.idOwner === -1">
+          <button type="button" class="btn btn-outline-primary btn-block btn-link"><i class="fas fa-share-alt"></i>&nbsp;Shared</button>
+      </div>
+      <img src="http://localhost:8082/v1/photos/character/{{car.idCharacter}}" class="card-img-top" >
+      <div class="card-body">
+        <h5 class="card-title">{{car.characterName}}</h5>
+        <p class="card-text">{{car.legend}}</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-pill badge-warning">{{car.category}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>
